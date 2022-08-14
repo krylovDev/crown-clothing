@@ -1,5 +1,9 @@
-import React from 'react'
-import { createUserDocumentFromAuth, signInWithGooglePopup } from '../../utils/database/firebase'
+import React, { useEffect } from 'react'
+import {
+	auth,
+	createUserDocumentFromAuth,
+	signInWithGooglePopup,
+} from '../../utils/database/firebase'
 
 const SignIn = () => {
 	const logGoogleUser = async () => {
@@ -10,9 +14,11 @@ const SignIn = () => {
 	return (
 		<div>
 			<h1>sign-in</h1>
+
 			<button onClick={ logGoogleUser }>
 				sign in with google
 			</button>
+
 		</div>
 	)
 }

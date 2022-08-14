@@ -4,6 +4,7 @@ import {
 	signInWithRedirect,
 	signInWithPopup,
 	GoogleAuthProvider,
+	createUserWithEmailAndPassword,
 } from 'firebase/auth'
 import {
 	getFirestore,
@@ -23,19 +24,19 @@ const firebaseConfig = {
 
 const firebaseApp = initializeApp(firebaseConfig)
 
-const provider = new GoogleAuthProvider()
+const googleProvider = new GoogleAuthProvider()
 
-provider.setCustomParameters({
+googleProvider.setCustomParameters({
 	prompt: 'select_account'
 })
 
 export const auth = getAuth()
-
-export const signInWithGooglePopup = () => signInWithPopup(auth, provider)
+export const signInWithGooglePopup = () => signInWithPopup(auth, googleProvider)
 
 export const db = getFirestore()
 
-export const createUserDocumentFromAuth = async (user) => {
+export const createUserDocumentFromAuth = async (user, additionalInformation = {}) => {
+	if (!user) return
 	const userDocRef = doc(db, 'users', user.uid)
 
 	const userSnapshot = await getDoc(userDocRef)
@@ -50,15 +51,21 @@ export const createUserDocumentFromAuth = async (user) => {
 				{
 					displayName,
 					email,
-					createdAt
+					createdAt,
+					...additionalInformation // Дополнительная информация
 				}
 			)
 		} catch ({ message }) {
-			console.error(`Не удалось записать пользователя в базу. Ошибка: ${message}`)
+			console.error(`Не удалось записать пользователя в базу. Ошибка: ${ message }`)
 		}
 	}
 
 	// Если пользователь есть в базе
 	return userDocRef
 
+}
+
+export const createAuthUserWithEmailAndPassword = async (email, password) => {
+	if (!email || !password) return
+	return createUserWithEmailAndPassword(auth, email, password)
 }
