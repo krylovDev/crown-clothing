@@ -1,6 +1,7 @@
 import Shop from '../../pages/shop/shop'
-import SignIn from '../../pages/sign-in/sign-in'
+import Authentication from '../../pages/authentication/authentication'
 import SignUp from '../../pages/sign-up/sign-up'
+import SignIn from "../../pages/sign-in/sign-in";
 
 export const pages = [
 	{
@@ -9,13 +10,8 @@ export const pages = [
 		component: <Shop/>
 	},
 	{
-		path: '/sign-in',
+		path: '/auth',
 		title: 'SIGN IN',
-		component: <SignIn/>
-	},
-	{
-		path: '/sign-up',
-		title: 'SIGN UP',
-		component: <SignUp/>
+		component: <Authentication/>
 	},
 ]
