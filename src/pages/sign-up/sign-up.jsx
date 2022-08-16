@@ -27,11 +27,12 @@ const SignUp = () => {
 	const handleSubmit = async (event) => {
 		event.preventDefault()
 		if (password !== confirmPassword) return
+
 		try {
 			const { user } = await createAuthUserWithEmailAndPassword(email, password)
 			await createUserDocumentFromAuth(user, { displayName })
 			resetFormFields()
-			console.log('Пользователь успешно создан')
+
 		} catch ({ message, code }) {
 			if (code === 'auth/email-already-in-use') {
 				console.error('Пользователь с такой почтой уже существует')

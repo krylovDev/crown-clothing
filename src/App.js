@@ -14,13 +14,15 @@ const App = () => {
 				 */ }
 				<Route index element={ <Home/> }/>
 				<Route path={'auth'} element={ <Authentication/> }/>
-				{ pages.map(({ path, component }) => (
+				{
+					pages.map(({ path, component }) => (
 					<Route
 						key={path}
 						path={ path }
 						element={ component }
 					/>
-				)) }
+				))
+				}
 			</Route>
 
 		</Routes>

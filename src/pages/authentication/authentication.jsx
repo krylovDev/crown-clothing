@@ -8,7 +8,6 @@ import SignUp from "../sign-up/sign-up";
 import SignIn from "../sign-in/sign-in";
 import './authentication.scss'
 
-
 const Authentication = () => {
 	const logGoogleUser = async () => {
 		const { user } = await signInWithGooglePopup()

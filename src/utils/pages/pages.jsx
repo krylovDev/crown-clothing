@@ -1,7 +1,6 @@
 import Shop from '../../pages/shop/shop'
 import Authentication from '../../pages/authentication/authentication'
-import SignUp from '../../pages/sign-up/sign-up'
-import SignIn from "../../pages/sign-in/sign-in";
+import { ProductsProvider } from "../../contexts/products";
 
 export const pages = [
 	{
