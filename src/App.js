@@ -8,20 +8,20 @@ import Authentication from "./pages/authentication/authentication";
 const App = () => {
 	return (
 		<Routes>
-			<Route path={ '/' } element={ <Navigation/> }>
+			<Route path={'/'} element={<Navigation/>}>
 				{/**
 				  @props {index} - Если путь такой же как и '/' , то отображаем <Home/>
-				 */ }
-				<Route index element={ <Home/> }/>
-				<Route path={'auth'} element={ <Authentication/> }/>
+				 */}
+				<Route index element={<Home/>}/>
+				<Route path={'auth'} element={<Authentication/>}/>
 				{
-					pages.map(({ path, component }) => (
-					<Route
-						key={path}
-						path={ path }
-						element={ component }
-					/>
-				))
+					pages.map(({path, component,isNavigation}) => (
+						<Route
+							key={path}
+							path={path}
+							element={component}
+						/>
+					))
 				}
 			</Route>
 

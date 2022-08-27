@@ -1,16 +1,18 @@
 import Shop from '../../pages/shop/shop'
-import Authentication from '../../pages/authentication/authentication'
-import { ProductsProvider } from "../../contexts/products";
+import Checkout from '../../pages/checkout/checkout'
 
 export const pages = [
 	{
+		isNavigation: true,
 		path: '/shop',
 		title: 'SHOP',
-		component: <Shop/>
+		component: <Shop/>,
+		className: 'nav-link'
 	},
 	{
-		path: '/auth',
-		title: 'SIGN IN',
-		component: <Authentication/>
+		isNavigation: false,
+		path: '/checkout',
+		title: 'Test',
+		component: <Checkout/>
 	},
 ]

@@ -8,6 +8,7 @@ import CartIcon from "../../components/cart-icon/cart-icon";
 import './navigation.scss'
 import CartDropdown from "../../components/cart-dropdown/cart-dropdown";
 import { CartContext } from "../../contexts/cart";
+import { pages } from "../../utils/pages/pages";
 
 const Navigation = () => {
 	const {currentUser} = useContext(UserContext)
@@ -21,12 +22,22 @@ const Navigation = () => {
 					<CrownLogo/>
 				</Link>
 				<div className={'nav-links-container'}>
-					<Link className={'nav-link'} to={'/shop'}>SHOP</Link>
+
+					{
+						pages.map(({isNavigation,path,title,className}) => isNavigation && (
+							<Link
+								className={className}
+								to={path}
+							>{title}</Link>
+						))
+					}
+
 					{
 						currentUser
 							? <span className={'nav-link'} onClick={signOutUser}> SIGN OUT</span>
 							: <Link className={'nav-link'} to={'/auth'}>SIGN IN</Link>
 					}
+
 					<CartIcon/>
 				</div>
 
