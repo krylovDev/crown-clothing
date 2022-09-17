@@ -5,10 +5,11 @@ import { useContext } from "react";
 import { UserContext } from "../../contexts/user";
 import { signOutUser } from "../../utils/database/firebase";
 import CartIcon from "../../components/cart-icon/cart-icon";
-import './navigation.scss'
+import './navigation.styles'
 import CartDropdown from "../../components/cart-dropdown/cart-dropdown";
 import { CartContext } from "../../contexts/cart";
 import { pages } from "../../utils/pages/pages";
+import { LogoContainer, NavigationContainer, NavLink, NavLinks } from "./navigation.styles";
 
 const Navigation = () => {
 	const {currentUser} = useContext(UserContext)
@@ -17,32 +18,32 @@ const Navigation = () => {
 
 	return (
 		<>
-			<div className={'navigation'}>
-				<Link to={'/'} className={'logo-container'}>
+			<NavigationContainer>
+				<LogoContainer to={'/'} className={'logo-container'}>
 					<CrownLogo/>
-				</Link>
-				<div className={'nav-links-container'}>
+				</LogoContainer>
+				<NavLinks>
 
 					{
 						pages.map(({isNavigation,path,title,className}) => isNavigation && (
-							<Link
-								className={className}
-								to={path}
-							>{title}</Link>
+							<NavLink
+								to={path}>
+								{title}
+							</NavLink>
 						))
 					}
 
 					{
 						currentUser
-							? <span className={'nav-link'} onClick={signOutUser}> SIGN OUT</span>
-							: <Link className={'nav-link'} to={'/auth'}>SIGN IN</Link>
+							? <NavLink as={'span'} onClick={signOutUser}> SIGN OUT</NavLink>
+							: <NavLink to={'/auth'}>SIGN IN</NavLink>
 					}
 
 					<CartIcon/>
-				</div>
+				</NavLinks>
 
 				{isCartOpen && <CartDropdown/>}
-			</div>
+			</NavigationContainer>
 			<Outlet/> {/* Работает как children */}
 		</>
 	)
