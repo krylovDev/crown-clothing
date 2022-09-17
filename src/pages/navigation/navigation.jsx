@@ -27,6 +27,7 @@ const Navigation = () => {
 					{
 						pages.map(({isNavigation,path,title,className}) => isNavigation && (
 							<NavLink
+								key={path}
 								to={path}>
 								{title}
 							</NavLink>
