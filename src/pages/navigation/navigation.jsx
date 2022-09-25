@@ -1,20 +1,19 @@
-import { Link, Outlet } from 'react-router-dom'
+import { useSelector } from "react-redux";
+import { Outlet } from 'react-router-dom'
 
 import { ReactComponent as CrownLogo } from '../../assets/crown-logo.svg'
-import { useContext } from "react";
-import { UserContext } from "../../contexts/user";
+import { selectIsCartOpened } from "../../store/cart/cart.selectors";
+import { selectCurrentUser } from "../../store/user/user.selectors";
 import { signOutUser } from "../../utils/database/firebase";
 import CartIcon from "../../components/cart-icon/cart-icon";
 import './navigation.styles'
 import CartDropdown from "../../components/cart-dropdown/cart-dropdown";
-import { CartContext } from "../../contexts/cart";
 import { pages } from "../../utils/pages/pages";
 import { LogoContainer, NavigationContainer, NavLink, NavLinks } from "./navigation.styles";
 
 const Navigation = () => {
-	const {currentUser} = useContext(UserContext)
-	const {isCartOpen,setIsCartOpen} = useContext(CartContext)
-
+	const currentUser = useSelector(selectCurrentUser)
+	const isCartOpen = useSelector(selectIsCartOpened)
 
 	return (
 		<>
@@ -25,7 +24,7 @@ const Navigation = () => {
 				<NavLinks>
 
 					{
-						pages.map(({isNavigation,path,title,className}) => isNavigation && (
+						pages.map(({isNavigation, path, title, className}) => isNavigation && (
 							<NavLink
 								key={path}
 								to={path}>
