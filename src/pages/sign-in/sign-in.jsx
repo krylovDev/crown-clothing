@@ -1,10 +1,6 @@
-import React, { useContext, useState } from 'react'
-import {
-	createAuthUserWithEmailAndPassword,
-	createUserDocumentFromAuth,
-	signInAuthUserWithEmailAndPassword,
-	signInWithGooglePopup
-} from '../../utils/database/firebase'
+import React, { useState } from 'react'
+import { useDispatch } from "react-redux";
+import { emailSignInStart, googleSignInStart } from "../../store/user/user.actions";
 import FormInput from '../../components/form/input/FormInput'
 import './sign-in.scss'
 import Button, { BUTTON_TYPE_CLASSES } from '../../components/button/button'
@@ -15,30 +11,27 @@ const defaultFormFields = {
 }
 
 const SignIn = () => {
-
+	const dispatch = useDispatch()
 	const [formFields, setFormFields] = useState(defaultFormFields)
-	const { email, password } = formFields
+	const {email, password} = formFields
 
 	const resetFormFields = () => {
 		setFormFields(defaultFormFields)
 	}
 
-	const signInWithGoogle = async () => {
-		await signInWithGooglePopup()
-	}
+	const signInWithGoogle = () => dispatch(googleSignInStart())
 
-	const handleSubmit = async (event) => {
+	const handleSubmit = (event) => {
 		event.preventDefault()
-
 		try {
-			const { user } = await signInAuthUserWithEmailAndPassword(email, password)
+			dispatch(emailSignInStart(email, password))
 			resetFormFields()
-		} catch ({ message, code }) {
+		} catch ({message, code}) {
 			switch (code) {
 				case 'auth/user-not-found':
-					return console.error(`Пользователь не найден. ${ message }`)
+					return console.error(`Пользователь не найден. ${message}`)
 				case 'auth/wrong-password':
-					return console.error(`Имя пользователя или пароль неверны. ${ message }`)
+					return console.error(`Имя пользователя или пароль неверны. ${message}`)
 				default:
 					return null
 			}
@@ -46,46 +39,46 @@ const SignIn = () => {
 	}
 
 	const handleChange = (event) => {
-		const { name, value } = event.target
-		setFormFields({ ...formFields, [name]: value })
+		const {name, value} = event.target
+		setFormFields({...formFields, [name]: value})
 	}
 
 	return (
-		<div className={ 'sign-up-container' }>
+		<div className={'sign-up-container'}>
 			<h2>Already have an account?</h2>
 			<span>Sign up with your email and password</span>
 			<form
-				onSubmit={ handleSubmit }
+				onSubmit={handleSubmit}
 			>
 
 				<FormInput
-					label={ 'Email' }
-					name={ 'email' }
+					label={'Email'}
+					name={'email'}
 					type="email"
 					required
-					value={ email }
-					onChange={ handleChange }
+					value={email}
+					onChange={handleChange}
 				/>
 
 				<FormInput
-					label={ 'Password' }
-					name={ 'password' }
+					label={'Password'}
+					name={'password'}
 					type="password"
 					required
-					value={ password }
-					onChange={ handleChange }
+					value={password}
+					onChange={handleChange}
 				/>
 
-				<div className={ 'buttons-container' }>
+				<div className={'buttons-container'}>
 					<Button
-						type={ 'submit' }
+						type={'submit'}
 					>Sign In
 					</Button>
 
 					<Button
-						type={ 'button' }
-						buttonType={ BUTTON_TYPE_CLASSES.google }
-						onClick={ signInWithGoogle }
+						type={'button'}
+						buttonType={BUTTON_TYPE_CLASSES.google}
+						onClick={signInWithGoogle}
 					>Google Sign In
 					</Button>
 				</div>

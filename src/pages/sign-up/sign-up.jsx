@@ -1,9 +1,7 @@
 import React, { useState } from 'react'
-import {
-	createAuthUserWithEmailAndPassword,
-	createUserDocumentFromAuth,
-	signInWithGooglePopup
-} from '../../utils/database/firebase'
+import { useDispatch } from "react-redux";
+import { emailSignUpStart } from "../../store/user/user.actions";
+
 import FormInput from '../../components/form/input/FormInput'
 import './sign-up.scss'
 import Button from '../../components/button/button'
@@ -16,9 +14,9 @@ const defaultFormFields = {
 }
 
 const SignUp = () => {
-
+	const dispatch = useDispatch()
 	const [formFields, setFormFields] = useState(defaultFormFields)
-	const { displayName, email, password, confirmPassword } = formFields
+	const {displayName, email, password, confirmPassword} = formFields
 
 	const resetFormFields = () => {
 		setFormFields(defaultFormFields)
@@ -29,70 +27,68 @@ const SignUp = () => {
 		if (password !== confirmPassword) return
 
 		try {
-			const { user } = await createAuthUserWithEmailAndPassword(email, password)
-			await createUserDocumentFromAuth(user, { displayName })
+			dispatch(emailSignUpStart(email, password, displayName))
 			resetFormFields()
-
-		} catch ({ message, code }) {
+		} catch ({message, code}) {
 			if (code === 'auth/email-already-in-use') {
 				console.error('Пользователь с такой почтой уже существует')
 			} else {
-				console.error(`Произошла ошибка при создании пользователя! Ошибка ${ message }`)
+				console.error(`Произошла ошибка при создании пользователя! Ошибка ${message}`)
 			}
 		}
 	}
 
 	const handleChange = (event) => {
-		const { name, value } = event.target
-		setFormFields({ ...formFields, [name]: value })
+		const {name, value} = event.target
+		setFormFields({...formFields, [name]: value})
 	}
 
 	return (
-		<div className={ 'sign-up-container' }>
+		<div className={'sign-up-container'}>
 			<h2>Don't have an account?</h2>
 			<span>Sign up with your email and password</span>
 			<form
-				onSubmit={ handleSubmit }
+				onSubmit={handleSubmit}
 			>
 
 				<FormInput
-					label={ 'DisplayName' }
-					name={ 'displayName' }
+					label={'DisplayName'}
+					name={'displayName'}
 					type="text"
 					required
-					value={ displayName }
-					onChange={ handleChange }
+					value={displayName}
+					onChange={handleChange}
 				/>
 
 				<FormInput
-					label={ 'Email' }
-					name={ 'email' }
+					label={'Email'}
+					name={'email'}
 					type="email"
 					required
-					value={ email }
-					onChange={ handleChange }
+					value={email}
+					onChange={handleChange}
 				/>
 
 				<FormInput
-					label={ 'Password' }
-					name={ 'password' }
+					label={'Password'}
+					name={'password'}
 					type="password"
 					required
-					value={ password }
-					onChange={ handleChange }
+					value={password}
+					onChange={handleChange}
 				/>
 
 				<FormInput
-					label={ 'ConfirmPassword' }
-					name={ 'confirmPassword' }
+					label={'ConfirmPassword'}
+					name={'confirmPassword'}
 					type="password"
 					required
-					value={ confirmPassword }
-					onChange={ handleChange }
+					value={confirmPassword}
+					onChange={handleChange}
 				/>
 
 				<Button
-					type={ 'submit' }
+					type={'submit'}
 				>Sign Up</Button>
 			</form>
 		</div>

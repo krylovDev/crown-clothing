@@ -5,29 +5,15 @@ import Navigation from './pages/navigation/navigation'
 import Authentication from "./pages/authentication/authentication";
 import Shop from "./pages/shop/shop";
 import Checkout from "./pages/checkout/checkout";
-import {
-	createUserDocumentFromAuth,
-	getCategoriesAndDocuments,
-	onAuthStateChangedListener
-} from "./utils/database/firebase";
 import { useEffect } from "react";
-import { setCurrentUser } from "./store/user/user.actions";
 import { useDispatch } from "react-redux";
+import { checkUserSession } from "./store/user/user.actions";
 
 const App = () => {
 	const dispatch = useDispatch()
 
-	// CurrentUser
 	useEffect(() => {
-		// Монтирование
-		const unsubscribe = onAuthStateChangedListener((user) => {
-			if (user) {
-				createUserDocumentFromAuth(user)
-			}
-			dispatch(setCurrentUser(user))
-		})
-		// Размонтирование
-		return unsubscribe // unmount effect
+		dispatch(checkUserSession())
 	}, [])
 
 	return (
