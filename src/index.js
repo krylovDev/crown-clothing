@@ -5,18 +5,20 @@ import App from './App'
 import { Provider } from "react-redux";
 import { store, persistor } from "./store/store";
 import reportWebVitals from './reportWebVitals'
-
+import { stripePromise } from "./utils/stripe/stripe.utils";
+import { Elements } from '@stripe/react-stripe-js'
 import { BrowserRouter } from 'react-router-dom'
-
 import './index.scss'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 
 root.render(
 	<Provider store={store}>
-		<PersistGate persistor={persistor} >
+		<PersistGate persistor={persistor}>
 			<BrowserRouter>
-				<App/>
+				<Elements stripe={stripePromise}>
+					<App/>
+				</Elements>
 			</BrowserRouter>
 		</PersistGate>
 	</Provider>
