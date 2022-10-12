@@ -1,3 +1,4 @@
+import {User} from 'firebase/auth'
 import {AdditionalInformation, UserData} from '../../utils/database/firebase.types'
 import {
 	Action,
@@ -49,7 +50,7 @@ export type EmailSignUpStart = ActionWithPayload<USER_ACTION_TYPES.EMAIL_SIGN_UP
 }>
 
 export type SignUpSuccess = ActionWithPayload<USER_ACTION_TYPES.SIGN_UP_SUCCESS, {
-	user: UserData,
+	user: User,
 	additionalDetails: AdditionalInformation
 }>
 

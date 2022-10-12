@@ -5,7 +5,7 @@ import {
 	all,
 	call,
 	put
-} from 'redux-saga/effects'
+} from 'typed-redux-saga/macro' /*'redux-saga/effects'*/
 import { CATEGORIES_ACTION_TYPES } from "./category.types";
 
 /* // Thunk-version
@@ -24,17 +24,17 @@ const fetchCategoriesAsync = () => async (dispatch) => {
 function* fetchCategoriesAsync() {
 	try {
 		// call - вызов функции
-		const categoriesArray = yield call(getCategoriesAndDocuments,'categories')
-		yield put(fetchCategoriesSuccess(categoriesArray))
+		const categoriesArray = yield* call(getCategoriesAndDocuments)
+		yield* put(fetchCategoriesSuccess(categoriesArray))
 	} catch (error) {
-		yield put(fetchCategoriesFailed(error))
+		yield* put(fetchCategoriesFailed(error as Error))
 	}
 }
 
 // dispatch(fetchCategoriesStart())
 function* onFetchCategories() {
 	// takeLatest принимает (action.type, action)
-	yield takeLatest(
+	yield* takeLatest(
 		CATEGORIES_ACTION_TYPES.FETCH_CATEGORIES_START,
 		fetchCategoriesAsync
 	)
@@ -42,7 +42,7 @@ function* onFetchCategories() {
 
 function* categoriesSaga() {
 	// в all завершаются все генераторы, потом код идёт дальше ( аналог await )
-	yield all([
+	yield* all([
 		call(onFetchCategories)
 	])
 }
