@@ -6,8 +6,7 @@ import {
 } from 'redux'
 import {
 	persistReducer,
-	persistStore,
-	PersistConfig
+	persistStore
 } from "redux-persist";
 import storage from 'redux-persist/lib/storage'
 import logger from 'redux-logger'
