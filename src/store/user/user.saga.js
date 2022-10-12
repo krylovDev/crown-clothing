@@ -19,7 +19,7 @@ import {
 	signUpFailed,
 	signUpSuccess
 } from "./user.actions";
-import USER_ACTION_TYPES from "./user.types";
+import { USER_ACTION_TYPES } from "./user.types";
 
 /* ____________________ SIGN-UP ____________________ */
 

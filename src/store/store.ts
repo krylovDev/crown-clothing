@@ -1,17 +1,28 @@
 import {
 	compose,
 	createStore,
-	applyMiddleware
+	applyMiddleware,
+	Middleware
 } from 'redux'
-import { persistReducer, persistStore } from "redux-persist";
+import {
+	persistReducer,
+	persistStore,
+	PersistConfig
+} from "redux-persist";
 import storage from 'redux-persist/lib/storage'
 import logger from 'redux-logger'
-import thunk from "redux-thunk";
+import {PersistedConfig} from './types/store.types'
 import { rootReducer } from "./root.reducer";
 import createSagaMiddleware from 'redux-saga';
 import { rootSaga } from './root.saga';
 
-const persistConfig = {
+declare global {
+	interface Window {
+		__REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose
+	}
+}
+
+const persistConfig: PersistedConfig = {
 	key: 'root',
 	storage,
 	// blacklist: ['user'] // user в state приходит из auth
@@ -26,7 +37,7 @@ const middleWares = [
 	process.env.NODE_ENV !== 'production' && logger,
 	// thunk
 	sagaMiddleware
-].filter(Boolean)
+].filter((middleware): middleware is Middleware => Boolean(middleware))
 
 const composeEnhancer = (
 	process.env.NODE_ENV !== 'production' &&
