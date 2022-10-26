@@ -1,3 +1,4 @@
+import { memo } from "react";
 import {
 	DirectoryItemContainter,
 	DirectoryItemContent,
@@ -5,7 +6,7 @@ import {
 } from './DirectoryItem.styles'
 import { useNavigate } from "react-router-dom";
 
-const DirectoryItem = ({category}) => {
+const DirectoryItem = memo(({category}) => {
 
 	const navigate = useNavigate()
 	const {id, title, imageUrl, route} = category
@@ -24,6 +25,6 @@ const DirectoryItem = ({category}) => {
 			</DirectoryItemContent>
 		</DirectoryItemContainter>
 	)
-}
+})
 
 export default DirectoryItem

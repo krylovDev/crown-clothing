@@ -1,5 +1,5 @@
-import {ActionWithPayload} from '../../utils/reducer/reducer.utils.types'
-import {CategoryItem} from '../categories/category.types'
+import { ActionWithPayload } from '../../utils/reducer/reducer.utils.types';
+import { CategoryItem } from '../categories/category.types';
 
 export enum CART_ACTION_TYPES {
 	SET_IS_CART_OPEN = 'cart/SET_IS_CART_OPEN',
@@ -9,16 +9,16 @@ export enum CART_ACTION_TYPES {
 }
 
 // __________ DATA STRUCTURE  __________
-export interface CartItem extends CategoryItem {
+export interface ICartItem extends CategoryItem {
 	quantity: number
 }
 
 export interface CartState {
 	readonly isCartOpen: boolean
-	readonly cartItems: CartItem[]
+	readonly cartItems: ICartItem[]
 }
 
 // __________ ACTIONS  __________
 export type SetIsCartOpen = ActionWithPayload<CART_ACTION_TYPES.SET_IS_CART_OPEN, boolean>
 
-export type SetCartItems = ActionWithPayload<CART_ACTION_TYPES.SET_CART_ITEMS, CartItem[]>
+export type SetCartItems = ActionWithPayload<CART_ACTION_TYPES.SET_CART_ITEMS, ICartItem[]>

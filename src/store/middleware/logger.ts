@@ -1,18 +1,18 @@
-import {Middleware} from 'redux'
-import {RootState} from '../../store/types/store.types'
+import { Middleware } from 'redux';
+import { RootState } from '../../store/types/store.types';
 
-const loggerMiddleware: Middleware<{}, RootState> = (store) => (next) => (action) => {
-	if (!action.type) {
-		return next(action)
-	}
+const loggerMiddleware: Middleware<undefined, RootState> = (store) => (next) => (action) => {
+  if (!action.type) {
+    return next(action);
+  }
 
-	console.log('type: ', action.type)
-	console.log('payload: ', action.payload)
-	console.log('currentState: ', store.getState())
+  console.log('type: ', action.type);
+  console.log('payload: ', action.payload);
+  console.log('currentState: ', store.getState());
 
-	next(action)
+  next(action);
 
-	console.log('next state: ', store.getState())
-}
+  console.log('next state: ', store.getState());
+};
 
-export default loggerMiddleware
+export default loggerMiddleware;

@@ -1,10 +1,9 @@
-import {User} from 'firebase/auth'
-import {AdditionalInformation, UserData} from '../../utils/database/firebase.types'
+import { User } from 'firebase/auth';
 import {
-	Action,
-	ActionWithPayload
-} from '../../utils/reducer/reducer.utils.types'
-
+  Action,
+  ActionWithPayload,
+} from '../../utils/reducer/reducer.utils.types';
+import { AdditionalInformation, UserData } from '../../utils/database/firebase.types';
 
 export enum USER_ACTION_TYPES {
 	SET_CURRENT_USER = 'user/SET_CURRENT_USER',

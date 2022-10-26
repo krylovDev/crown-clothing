@@ -4,8 +4,8 @@ import {
 	createUserDocumentFromAuth,
 	signInWithGooglePopup,
 } from '../../utils/database/firebase'
-import SignUp from "../sign-up/sign-up";
-import SignIn from "../sign-in/sign-in";
+import SignUp from "../sign-up/signUp";
+import SignIn from "../sign-in/signIn";
 import './authentication.scss'
 
 const Authentication = () => {

@@ -1,18 +1,18 @@
 import {
-	compose,
-	createStore,
-	applyMiddleware,
-	Middleware
-} from 'redux'
+  compose,
+  createStore,
+  applyMiddleware,
+  Middleware,
+} from 'redux';
 import {
-	persistReducer,
-	persistStore
-} from "redux-persist";
-import storage from 'redux-persist/lib/storage'
-import logger from 'redux-logger'
-import {PersistedConfig} from './types/store.types'
-import { rootReducer } from "./root.reducer";
+  persistReducer,
+  persistStore,
+} from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import logger from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
+import { PersistedConfig } from './types/store.types';
+import { rootReducer } from './root.reducer';
 import { rootSaga } from './root.saga';
 
 declare global {
@@ -22,32 +22,32 @@ declare global {
 }
 
 const persistConfig: PersistedConfig = {
-	key: 'root',
-	storage,
-	// blacklist: ['user'] // user в state приходит из auth
-	whitelist: ['cart'],
-}
+  key: 'root',
+  storage,
+  // blacklist: ['user'] // user в state приходит из auth
+  whitelist: ['cart'],
+};
 
-const sagaMiddleware = createSagaMiddleware()
+const sagaMiddleware = createSagaMiddleware();
 
-const persistedReducer = persistReducer(persistConfig, rootReducer)
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const middleWares = [
-	process.env.NODE_ENV !== 'production' && logger,
-	// thunk
-	sagaMiddleware
-].filter((middleware): middleware is Middleware => Boolean(middleware))
+  process.env.NODE_ENV !== 'production' && logger,
+  // thunk
+  sagaMiddleware,
+].filter((middleware): middleware is Middleware => Boolean(middleware));
 
 const composeEnhancer = (
-	process.env.NODE_ENV !== 'production' &&
-	window &&
-	window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-) || compose
+  process.env.NODE_ENV !== 'production'
+	&& window
+	&& window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+) || compose;
 
-const composeEnhancers = composeEnhancer(applyMiddleware(...middleWares))
+const composeEnhancers = composeEnhancer(applyMiddleware(...middleWares));
 
-export const store = createStore(persistedReducer, undefined, composeEnhancers)
+export const store = createStore(persistedReducer, undefined, composeEnhancers);
 
-sagaMiddleware.run(rootSaga)
+sagaMiddleware.run(rootSaga);
 
-export const persistor = persistStore(store)
+export const persistor = persistStore(store);

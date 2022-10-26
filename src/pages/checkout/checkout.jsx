@@ -1,13 +1,20 @@
-import React from 'react';
+import React, { memo, useMemo } from 'react';
 import { useSelector } from "react-redux";
 import './checkout.scss'
-import CheckoutItem from "../../components/checkout-item/checkout-item";
-import PaymentForm from "../../components/payment-form/payment-form";
+import CheckoutItem from "../../components/checkout-item/CheckoutItem";
+import PaymentForm from "../../components/payment-form/paymentForm";
 import { selectCartItems, selectCartTotalPrice } from "../../store/cart/cart.selectors";
 
-const Checkout = () => {
+const Checkout = memo(() => {
 	const cartItems = useSelector(selectCartItems)
 	const cartTotalPrice = useSelector(selectCartTotalPrice)
+
+	const cardItemsArray = useMemo(() => cartItems.map((cartItem) => (
+		<CheckoutItem
+			key={cartItem.id}
+			cartItem={cartItem}
+		/>
+	)),[cartItems])
 
 	return (
 		<>
@@ -29,19 +36,12 @@ const Checkout = () => {
 						<span>Remove</span>
 					</div>
 				</div>
-				{
-					cartItems.map((cartItem) => (
-						<CheckoutItem
-							key={cartItem.id}
-							cartItem={cartItem}
-						/>
-					))
-				}
+				{cardItemsArray}
 				<span className={'total'}>Total: &#36; {`${cartTotalPrice}`}</span>
 				<PaymentForm/>
 			</div>
 		</>
 	);
-};
+});
 
 export default Checkout;

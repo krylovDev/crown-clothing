@@ -1,9 +1,10 @@
+import { useMemo } from "react";
 import DirectoryItem from '../directory-item/DirectoryItem'
 import './directory.scss'
 
 const Directory = () => {
 
-	const categories = [
+	const categories = useMemo(() => [
 		{
 			"id": 1,
 			"title": "hats",
@@ -34,7 +35,7 @@ const Directory = () => {
 			"imageUrl": "https://i.ibb.co/R70vBrQ/men.png",
 			"route": "shop/mens"
 		}
-	]
+	],[])
 
 	return (
 		<div className={ 'directory-container' }>

@@ -1,8 +1,8 @@
-import {AnyAction} from 'redux'
+import { AnyAction } from 'redux';
 import {
-	Action,
-	ActionWithPayload
-} from '../../utils/reducer/reducer.utils.types'
+  Action,
+  ActionWithPayload,
+} from '../../utils/reducer/reducer.utils.types';
 
 export enum CATEGORIES_ACTION_TYPES {
 	FETCH_CATEGORIES_START = 'category/FETCH_CATEGORIES_START',
@@ -48,6 +48,3 @@ export interface CategoriesState {
 	readonly isLoading: boolean
 	readonly error: Error | null
 }
-
-
-

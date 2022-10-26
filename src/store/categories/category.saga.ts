@@ -1,12 +1,12 @@
-import { getCategoriesAndDocuments } from "../../utils/database/firebase"
-import { fetchCategoriesFailed, fetchCategoriesStart, fetchCategoriesSuccess } from "./category.actions"
 import {
-	takeLatest,
-	all,
-	call,
-	put
-} from 'typed-redux-saga/macro' /*'redux-saga/effects'*/
-import { CATEGORIES_ACTION_TYPES } from "./category.types";
+  takeLatest,
+  all,
+  call,
+  put,
+} from 'typed-redux-saga/macro'; /* 'redux-saga/effects' */
+import { getCategoriesAndDocuments } from '../../utils/database/firebase';
+import { fetchCategoriesFailed, fetchCategoriesStart, fetchCategoriesSuccess } from './category.actions';
+import { CATEGORIES_ACTION_TYPES } from './category.types';
 
 /* // Thunk-version
 const fetchCategoriesAsync = () => async (dispatch) => {
@@ -22,29 +22,29 @@ const fetchCategoriesAsync = () => async (dispatch) => {
 
 // action
 function* fetchCategoriesAsync() {
-	try {
-		// call - вызов функции
-		const categoriesArray = yield* call(getCategoriesAndDocuments)
-		yield* put(fetchCategoriesSuccess(categoriesArray))
-	} catch (error) {
-		yield* put(fetchCategoriesFailed(error as Error))
-	}
+  try {
+    // call - вызов функции
+    const categoriesArray = yield* call(getCategoriesAndDocuments);
+    yield* put(fetchCategoriesSuccess(categoriesArray));
+  } catch (error) {
+    yield* put(fetchCategoriesFailed(error as Error));
+  }
 }
 
 // dispatch(fetchCategoriesStart())
 function* onFetchCategories() {
-	// takeLatest принимает (action.type, action)
-	yield* takeLatest(
-		CATEGORIES_ACTION_TYPES.FETCH_CATEGORIES_START,
-		fetchCategoriesAsync
-	)
+  // takeLatest принимает (action.type, action)
+  yield* takeLatest(
+    CATEGORIES_ACTION_TYPES.FETCH_CATEGORIES_START,
+    fetchCategoriesAsync,
+  );
 }
 
 function* categoriesSaga() {
-	// в all завершаются все генераторы, потом код идёт дальше ( аналог await )
-	yield* all([
-		call(onFetchCategories)
-	])
+  // в all завершаются все генераторы, потом код идёт дальше ( аналог await )
+  yield* all([
+    call(onFetchCategories),
+  ]);
 }
 
-export default categoriesSaga
+export default categoriesSaga;
